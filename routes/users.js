@@ -87,6 +87,8 @@ router.patch('/:id', uploads.single('profilePhoto'), async (req, res, next) => {
     const userID = req.params.id;
     const update = req.body;
 
+    update.profilePhoto = req.file.filename;
+
     try {
         const docs = await users.findByIdAndUpdate(userID, { $set: update }, { new: true });
         res.json({
