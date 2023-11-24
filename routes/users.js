@@ -68,12 +68,13 @@ router.post('/compare', async (req, res, next) => {
 
         if (user && await user.comparePassword(enteredPassword)) {
             res.json({
-                Success: 'Access Granted!',
+                status: 'Success',
                 User: user
             });
         } else {
             res.json({
-                Oops: 'Access Failed! please check your log-in credentials again.'
+                status: 'Failure',
+                message: 'Access Failed! please check your log-in credentials again.'
             });
         }
     } catch (err) {
