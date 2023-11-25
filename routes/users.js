@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
+const bcrypt = require('bcrypt');
 const users = require('../models/users');
 
 // const deleteData = async () => {
@@ -94,6 +95,32 @@ router.patch('/:id', uploads.single('profilePhoto'), async (req, res, next) => {
         const docs = await users.findByIdAndUpdate(userID, { $set: update }, { new: true });
         res.json({
             Success: 'user has been updated!',
+            update: docs
+        });
+    } catch (err) {
+        res.json({
+            Error: err.message
+        })
+    }
+});
+
+const hashPassword = async (password) => {
+    try {
+        return await bcrypt.hash(password, 10);
+    } catch (err) {
+        console.error(err);
+    }
+};
+
+router.patch('/updatePassword/:id', async (req, res, next) => {
+    const userID = req.params.id;
+    const update = req.body;
+
+    try {
+        update.password = await hashPassword(update.password);
+        const docs = await users.findByIdAndUpdate(userID, {$set: update}, {new: true});
+        res.json({
+            status: 'Success!',
             update: docs
         });
     } catch (err) {
