@@ -5,6 +5,7 @@ const port = 4000;
 const cors = require('cors');
 const mongoose = require('mongoose');
 const users = require('./routes/users');
+const addOffer = require('./routes/addOffer');
 
 mongoose.connect('mongodb://localhost:27017/project-w');
 const db = mongoose.connection;
@@ -17,6 +18,7 @@ app.use(cors());
 app.use(express.static('profile-Photos'));
 
 app.use('/users', users);
+app.use('/addOffer', addOffer);
 
 const server = http.createServer(app);
 
