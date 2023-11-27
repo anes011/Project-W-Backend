@@ -3,6 +3,16 @@ const router = express.Router();
 const multer = require('multer');
 const addOffer = require('../models/addOffer');
 
+// const deleteAll = async () => {
+//     try {
+//         const docs = await addOffer.deleteMany({});
+//     } catch (err) {
+//         console.error(err);
+//     }
+// };
+
+// deleteAll();
+
 const storage = multer.diskStorage({
     destination: 'offerImages',
     filename: (req, file, cb) => {
