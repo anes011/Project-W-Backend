@@ -50,11 +50,12 @@ router.post('/', uploads.single('profilePhoto'), async (req, res, next) => {
     try {
         const docs = await users.create(userData);
         res.json({
-            Success: 'User created successfully!',
+            Status: 'success',
             user: docs
         })
     } catch (err) {
         res.json({
+            Status: 'failure',
             Error: err.message
         })
     }
