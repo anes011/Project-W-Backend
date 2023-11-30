@@ -6,6 +6,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const users = require('./routes/users');
 const addOffer = require('./routes/addOffer');
+const comments = require('./routes/comments');
 
 mongoose.connect('mongodb://localhost:27017/project-w');
 const db = mongoose.connection;
@@ -19,6 +20,7 @@ app.use(express.static('profile-Photos'));
 
 app.use('/users', users);
 app.use('/addOffer', addOffer);
+app.use('/comments', comments);
 
 const server = http.createServer(app);
 
