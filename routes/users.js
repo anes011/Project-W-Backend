@@ -28,6 +28,21 @@ router.get('/', async (req, res, next) => {
     }
 });
 
+router.get('/:id', async (req, res, next) => {
+    const userID = req.params.id;
+
+    try {
+        const docs = await users.findById(userID);
+        res.json({
+            user: docs
+        })
+    } catch (err) {
+        res.json({
+            Error: err.message
+        })
+    }
+});
+
 const storage = multer.diskStorage({
     destination: 'profile-Photos',
     filename: (req, file, cb) => {
