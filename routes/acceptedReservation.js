@@ -39,4 +39,39 @@ router.get('/', async (req, res, next) => {
     }
 });
 
+router.patch('/:id', async (req, res, next) => {
+    const acceptedReservationID = req.params.id;
+    const update = req.body;
+
+    update.new = req.body.new;
+
+    try {
+        const docs = await acceptedReservation.findByIdAndUpdate(acceptedReservationID, { $set: update }, { new: true });
+        res.json({
+            Success: 'updated successfully!',
+            update: docs
+        })
+    } catch (err) {
+        res.json({
+            Error: err.message
+        })
+    }
+});
+
+router.delete('/:id', async (req, res, next) => {
+    const acceptedReservationID = req.params.id;
+
+    try {
+        const docs = await acceptedReservation.findByIdAndDelete(acceptedReservationID);
+        res.json({
+            Success: 'deleted successfully!',
+            deleted: docs
+        })
+    } catch (err) {
+        res.json({
+            Error: err.message
+        })
+    }
+});
+
 module.exports = router;

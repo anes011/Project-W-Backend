@@ -56,4 +56,23 @@ router.delete('/:id', async (req, res, next) => {
     }
 });
 
+router.patch('/:id', async (req, res, next) => {
+    const reservationID = req.params.id;
+    const update = req.body;
+
+    update.new = req.body.new;
+
+    try {
+        const docs = await reservation.findByIdAndUpdate(reservationID, { $set: update }, { new: true });
+        res.json({
+            Success: 'updated successfully!',
+            update: docs
+        })
+    } catch (err) {
+        res.json({
+            Error: err.message
+        })
+    }
+});
+
 module.exports = router;

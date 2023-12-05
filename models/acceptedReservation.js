@@ -26,6 +26,10 @@ const acceptedReservationSchema = new Schema ({
         type: String,
         required: true
     },
+    new: {
+        type: Boolean,
+        default: true
+    },
     date: {
         type: Date,
         default: Date.now
