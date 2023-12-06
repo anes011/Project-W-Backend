@@ -92,4 +92,21 @@ router.delete('/:id', async (req, res, next) => {
     }
 });
 
+router.get('/search', async (req, res, next) => {
+    const q = req.query.q;
+
+    try {
+        const docs = await addOffer.find({ title: 
+            { $regex: new RegExp(q, 'i') } 
+        });
+        res.json({
+            result: docs
+        })
+    } catch (err) {
+        res.json({
+            Error: err.message
+        })
+    }
+});
+
 module.exports = router;
