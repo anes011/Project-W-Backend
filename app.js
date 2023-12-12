@@ -10,7 +10,7 @@ const comments = require('./routes/comments');
 const reservation = require('./routes/reservation');
 const acceptedReservation = require('./routes/acceptedReservation');
 
-mongoose.connect('mongodb://localhost:27017/project-w');
+mongoose.connect('mongodb+srv://anes85594:19L5EF1ZTsy23aEU@cluster0.kfkxpdn.mongodb.net/');
 const db = mongoose.connection;
 
 db.on('error', (err) => console.error(err));
