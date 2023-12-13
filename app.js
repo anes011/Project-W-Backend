@@ -11,6 +11,7 @@ const reservation = require('./routes/reservation');
 const acceptedReservation = require('./routes/acceptedReservation');
 
 mongoose.connect('mongodb+srv://anes85594:19L5EF1ZTsy23aEU@cluster0.kfkxpdn.mongodb.net/');
+// mongoose.connect('mongodb://localhost:27017/project-w');
 const db = mongoose.connection;
 
 db.on('error', (err) => console.error(err));
@@ -19,6 +20,7 @@ db.once('open', () => console.log('Database is up and running ;)'));
 app.use(express.json());
 app.use(cors());
 app.use(express.static('profile-Photos'));
+app.use(express.static('offerImages'));
 
 app.use('/users', users);
 app.use('/addOffer', addOffer);

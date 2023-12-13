@@ -2,6 +2,16 @@ const express = require('express');
 const router = express.Router();
 const acceptedReservation = require('../models/acceptedReservation');
 
+// const deleteAll = async () => {
+//     try {
+//         await acceptedReservation.deleteMany({});
+//     } catch (err) {
+//         console.error(err);
+//     }
+// }
+
+// deleteAll();
+
 router.post('/', async (req, res, next) => {
     const acceptedReservationToPost = ({
         reservistID: req.body.reservistID,
