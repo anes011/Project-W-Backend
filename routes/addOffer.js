@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const addOffer = require('../models/addOffer');
 
 // const deleteAll = async () => {
@@ -13,18 +15,21 @@ const addOffer = require('../models/addOffer');
 
 // deleteAll();
 
-const storage = multer.diskStorage({
-    destination: 'offerImages',
-    filename: (req, file, cb) => {
-        cb(null, file.originalname);
-    }
+cloudinary.config({ 
+    cloud_name: 'dlhjhg5yh', 
+    api_key: '887992126494528', 
+    api_secret: 'Jc9ZOx2UIVJEtfnb36w5hcGlb2I' 
+});
+
+const storage = new CloudinaryStorage({
+    cloudinary: cloudinary
 });
 
 const uploads = multer({ storage: storage });
 
 router.post('/', uploads.array('offerImages'), async (req, res, next) => {
     const files = req.files;
-    const offerImages = files.map(x => x.filename);
+    const offerImages = files.map(x => x.path);
     
     const offer = ({
         hostID: req.body.hostID,

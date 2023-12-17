@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const bcrypt = require('bcrypt');
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const users = require('../models/users');
 
 // const deleteData = async () => {
@@ -43,11 +45,14 @@ router.get('/:id', async (req, res, next) => {
     }
 });
 
-const storage = multer.diskStorage({
-    destination: 'profile-Photos',
-    filename: (req, file, cb) => {
-        cb(null, file.originalname);
-    }
+cloudinary.config({
+    cloud_name: 'dlhjhg5yh', 
+    api_key: '887992126494528', 
+    api_secret: 'Jc9ZOx2UIVJEtfnb36w5hcGlb2I' 
+});
+
+const storage = new CloudinaryStorage({
+    cloudinary: cloudinary
 });
 
 const uploads = multer({ storage: storage });
@@ -57,7 +62,7 @@ router.post('/', uploads.single('profilePhoto'), async (req, res, next) => {
         userName: req.body.userName,
         email: req.body.email,
         password: req.body.password,
-        profilePhoto: req.file.filename,
+        profilePhoto: req.file.path,
         phoneNumber: req.body.phoneNumber,
         location: req.body.location
     });
@@ -105,7 +110,7 @@ router.patch('/:id', uploads.single('profilePhoto'), async (req, res, next) => {
     const userID = req.params.id;
     const update = req.body;
 
-    update.profilePhoto = req.file.filename;
+    update.profilePhoto = req.file.path;
 
     try {
         const docs = await users.findByIdAndUpdate(userID, { $set: update }, { new: true });
